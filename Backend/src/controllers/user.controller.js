@@ -12,10 +12,26 @@ const registerUser = async (req, res) => {
                 message: "All fields are important"
             })
         }
-     // check if user exists already
+        // check if user exists already
 
-     const existing = await User.findOne({
-        eamil:email.toLowerCase()});
-     }
+        const existing = await User.findOne({
+            eamil: email.toLowerCase()
+        });
+        if (existing) {
+            return res.status(400).json({
+                message: "User already exists"
+            });
+        }
+        // create user
+
+        const user = await User.create({
+            username,
+            email: email.toLowerCase(),
+            password,
+            loggedIn: false
+        })
+
+    } catch (error) {
+
     }
 }
