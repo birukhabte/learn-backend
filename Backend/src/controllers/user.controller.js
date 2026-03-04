@@ -30,8 +30,19 @@ const registerUser = async (req, res) => {
             password,
             loggedIn: false
         })
-
+        return res.status(201).json({
+            message: "User registered successfully",
+            user: { id: user._id, email: user.email, username: user.username }
+        })
     } catch (error) {
+        res.status(500).json({
+            message: "Internal server error"
+        })
 
     }
+
+}
+
+export {
+    registerUser
 }
