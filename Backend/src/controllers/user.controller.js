@@ -43,30 +43,35 @@ const registerUser = async (req, res) => {
 
 }
 
-const loginUser = async (req,res)=>{
-    try{
+const loginUser = async (req, res) => {
+    try {
         //check if the user already exists
-        const {email,password}=req.body;
+        const { email, password } = req.body;
 
-        const user = await User.findOne({email:email.toLowerCase()});
-          email:email.toLowerCase()
+        const user = await User.findOne({ email: email.toLowerCase() });
+        email: email.toLowerCase()
 
-          if(!user){
+        if (!user) {
             return res.status(404).json({
-                message:"User not found"
+                message: "User not found"
             })
-          }
-          if(user.password !== password){
+        }
+        if (user.password !== password) {
             return res.status(401).json({
-                message:"Invalid password"
+                message: "Invalid password"
             })
-          }
-          user.loggedIn = true;
-          await user.save();
-          return res.status(200).json({
-            message:"User logged in successfully",
+        }
+        user.loggedIn = true;
+        await user.save();
+        return res.status(200).json({
+            message: "User logged in successfully",
             user: { id: user._id, email: user.email, username: user.username }
-          })
+        })
+    }
+    catch (error) {
+        res.status(500).json({
+            message: "Internal server error"
+        })
     }
 }
 
