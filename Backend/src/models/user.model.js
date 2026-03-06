@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import bcrypt from "bcrypt";
 
 const userSchema = new Schema({
     username: {
@@ -24,5 +25,8 @@ const userSchema = new Schema({
         maxLength: [30, "Password must be at most 30 characters long"]
     }
 }, { timestamps: true });
+    
+  // before saving any password we have to hash it first
+  
 
 export const User = mongoose.model("User", userSchema);
