@@ -34,8 +34,7 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true,
-        minLength: [4, "Password must be at least 8 characters long"],
-        maxLength: [30, "Password must be at most 30 characters long"]
+        minLength: [4, "Password must be at least 8 characters long"]
     },
 
     // Tracks whether the user is currently logged in
