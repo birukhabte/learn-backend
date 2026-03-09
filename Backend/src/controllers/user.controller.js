@@ -49,14 +49,14 @@ const loginUser = async (req, res) => {
         const { email, password } = req.body;
 
         const user = await User.findOne({ email: email.toLowerCase() });
-        email: email.toLowerCase()
 
         if (!user) {
             return res.status(404).json({
                 message: "User not found"
             })
         }
-        if (user.password !== password) {
+        const isPasswordValid = await user.comparePassword(password);
+        if (!isPasswordValid) {
             return res.status(401).json({
                 message: "Invalid password"
             })
@@ -69,6 +69,7 @@ const loginUser = async (req, res) => {
         })
     }
     catch (error) {
+        console.error("Login Error:", error);
         res.status(500).json({
             message: "Internal server error"
         })
@@ -76,5 +77,6 @@ const loginUser = async (req, res) => {
 }
 
 export {
-    registerUser
+    registerUser,
+    loginUser
 }
